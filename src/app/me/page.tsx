@@ -68,7 +68,10 @@ export default function MePage() {
   }
 
   if (loading) return <Loading />;
-  if (!user) return null;
+  if (!user) {
+    router.replace("/accounts/signin");
+    return null;
+  }
 
   const signoutHandler = async () => {
       try {
