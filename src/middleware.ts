@@ -5,11 +5,11 @@ export function middleware(req: NextRequest) {
     const token = req.cookies?.get("accessToken")?.value;
     const { pathname } = req.nextUrl;
 
-    if(pathname.startsWith("/me") && !token) {
-        return NextResponse.redirect(
-            new URL("/accounts/signin", req.url)
-        );
-    }
+    // if(pathname.startsWith("/me") && !token) {
+    //     return NextResponse.redirect(
+    //         new URL("/accounts/signin", req.url)
+    //     );
+    // }
 
     // const authRoutes = [
     //     "/accounts/signin",
@@ -25,8 +25,8 @@ export function middleware(req: NextRequest) {
     return response;
 };
 
-export const config = {
-  matcher: [
-    "/me/:path*",
-  ],
-};
+// export const config = {
+//   matcher: [
+//     "/me/:path*",
+//   ],
+// };
