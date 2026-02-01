@@ -11,14 +11,14 @@ export function middleware(req: NextRequest) {
         );
     }
 
-    const authRoutes = [
-        "/accounts/signin",
-        "/accounts/signup",
-    ]
+    // const authRoutes = [
+    //     "/accounts/signin",
+    //     "/accounts/signup",
+    // ]
 
-    if(token && authRoutes.some(route => pathname.startsWith(route))) {
-        return NextResponse.redirect(new URL("/me", req.url));
-    }
+    // if(token && authRoutes.some(route => pathname.startsWith(route))) {
+    //     return NextResponse.redirect(new URL("/me", req.url));
+    // }
 
     return NextResponse.next();
 };
@@ -26,6 +26,5 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/me/:path*",
-    "/accounts/:path*",
   ],
 };
