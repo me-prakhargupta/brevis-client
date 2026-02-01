@@ -6,19 +6,17 @@ export function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
     if(pathname.startsWith("/me") && !token) {
-        return NextResponse.redirect(new URL("/accounts/signin", req.url));
+        return NextResponse.redirect(
+            new URL("/accounts/signin", req.url)
+        );
     }
 
-    const loggedRoutes = [
-        "/accounts",
-        "/choose",
-        "/thoughts",
-        "to/",
+    const authRoutes = [
+        "/accounts/signin",
+        "/accounts/signup",
     ]
 
-    const isLogged = loggedRoutes.some(route => pathname.startsWith(route));
-
-    if(isLogged && token) {
+    if(token && authRoutes.some(route => pathname.startsWith(route))) {
         return NextResponse.redirect(new URL("/me", req.url));
     }
 
@@ -29,8 +27,5 @@ export const config = {
   matcher: [
     "/me/:path*",
     "/accounts/:path*",
-    "/choose",
-    "/thoughts/:path*",
-    "/to/:path*",
   ],
 };
