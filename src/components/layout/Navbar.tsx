@@ -24,7 +24,7 @@ export default function ConfesslyDock() {
             group-hover:tracking-normal
             group-hover:text-orange-400
           ">
-            Quietism
+            Brevis
           </span>
           <span className="ml-1 w-1 h-1 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
         </Link>

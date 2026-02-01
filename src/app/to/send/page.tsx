@@ -8,7 +8,7 @@ import { toast } from "sonner";
 export default function SendMessage() {
   const [form, setForm] = useState({
     username: "",
-    message: "",
+    content: "",
   });
 
   const [sending, setSending] = useState(false);
@@ -20,7 +20,7 @@ export default function SendMessage() {
   };
 
   const submitHandler = async () => {
-    if (!form.message.trim() || !form.username.trim()) {
+    if (!form.content.trim() || !form.username.trim()) {
       toast.error("Username and message are required");
       return;
     }
@@ -28,10 +28,15 @@ export default function SendMessage() {
     setSending(true);
 
     try {
-      const res = await sendMessage(form);
+      const data = await sendMessage(form);
 
-      toast.success("Your message has been sent successfully.");
-      setForm({ username: "", message: "" });
+      if(data?.success === false) {
+        toast.info(data.message);
+        return;
+      }
+
+      toast.success(data.message);
+      setForm({ username: "", content: "" });
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
@@ -94,8 +99,8 @@ export default function SendMessage() {
         {/* Message */}
         <div className="space-y-4">
           <textarea
-            name="message"
-            value={form.message}
+            name="content"
+            value={form.content}
             onChange={changeHandler}
             placeholder="You don’t have to get it right."
             rows={6}
@@ -139,7 +144,7 @@ export default function SendMessage() {
 
           <button
             onClick={submitHandler}
-            disabled={sending || !form.message.trim()}
+            disabled={sending || !form.content.trim()}
             className="
               rounded-full
               px-7

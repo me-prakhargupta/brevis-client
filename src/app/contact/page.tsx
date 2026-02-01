@@ -1,6 +1,43 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { responseForm } from "@/services/auth";
+import { toast } from "sonner";
+
+type Form = {
+  identifier: string,
+  content: string,
+}
 
 export default function Contact() {
+  const [form, setForm] = useState<Form>({
+    identifier: "",
+    content: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({...form, [e.target.name]: e.target.value});
+  }
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await responseForm(form);
+      toast.success("It’s been shared. We’ll get back to you soon.");
+      setForm({ identifier:"", content:""});
+    } catch(err: any) {
+      toast("Couldn’t send right now.");
+    } finally {
+      setLoading(false);
+    }
+
+  }
+
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden flex flex-col items-center sm:py-15">
       
@@ -43,7 +80,7 @@ export default function Contact() {
         </header>
 
         {/* Form */}
-        <form className="space-y-8">
+        <form onSubmit={submitHandler} className="space-y-8">
           
           {/* Identity */}
           <div className="space-y-2">
@@ -51,6 +88,9 @@ export default function Contact() {
               Identity
             </label>
             <input
+              name="identifier"
+              value={form.identifier}
+              onChange={changeHandler}
               type="text"
               placeholder="Mobile number or email"
               className="
@@ -76,6 +116,9 @@ export default function Contact() {
               Message
             </label>
             <textarea
+              name="content"
+              value={form.content}
+              onChange={changeHandler}
               rows={5}
               placeholder="Write what you need to say…"
               className="
@@ -119,14 +162,14 @@ export default function Contact() {
                 active:scale-[0.98]
                 cursor-pointer
               "
-            >
-              Send letter
+            > {loading ? "Sending..." : "Send letter"}
+              
             </button>
           </div>
         </form>
 
         {/* Quiet contact line */}
-        <div className="pt-6 border-t border-white/5 text-center text-xs text-white/30">
+        {/* <div className="pt-6 border-t border-white/5 text-center text-xs text-white/30">
           Or reach directly at{" "}
           <a
             href="mailto:founder@emptied.in"
@@ -138,10 +181,11 @@ export default function Contact() {
           <Link
             href="https://instagram.com/emptied.in"
             className="text-white/60 hover:text-orange-400 transition"
+            target="_blank" rel="noopener noreferrer"
           >
             Instagram
           </Link>
-        </div>
+        </div> */}
       </section>
     </main>
   );

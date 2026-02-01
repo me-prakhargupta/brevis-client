@@ -27,9 +27,7 @@ export default function Signin() {
     try {
       await signinUser(form);
       toast.success("Welcome back.");
-      console.log("Pre router push");
       router.push("/me");
-      console.log("Post router push");
       setForm({ identifier: "", password: "" });
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Something went wrong")

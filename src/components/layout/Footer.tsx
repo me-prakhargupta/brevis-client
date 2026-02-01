@@ -42,15 +42,15 @@ export default function Footer() {
           <div className="flex flex-col items-center space-y-3">
             <Link href="/" className="group">
               <span className="text-white font-extrabold text-lg sm:text-xl tracking-tighter opacity-80 group-hover:opacity-100 transition-opacity">
-                Quietism
+                Brevis
               </span>
             </Link>
-
+            
             <div className="h-8 w-px bg-gradient-to-b from-stone-800 to-transparent" />
           </div>
 
           {/* 3. Secondary Info */}
-          <div className="mt-8 w-full flex flex-col md:flex-row items-center justify-between text-[10px] text-stone-600 tracking-widest">
+          {/* <div className="mt-8 w-full flex flex-col md:flex-row items-center justify-between text-[10px] text-stone-600 tracking-widest">
             <p className="order-2 md:order-1 mt-4 md:mt-0 text-center md:text-left">
               © 2026 — All rights reserved
             </p>
@@ -66,7 +66,7 @@ export default function Footer() {
                 @quietism.in
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

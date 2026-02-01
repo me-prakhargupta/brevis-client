@@ -16,9 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Quietism",
-  description: "",
+  title: "Brevis - A place to let it out.",
+  description:
+    "Brevis is a minimal space to share thoughts and messages without replies, noise, or expectation.",
 };
+
 
 export default function RootLayout({
   children,

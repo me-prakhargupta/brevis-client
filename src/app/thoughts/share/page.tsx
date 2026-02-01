@@ -6,16 +6,16 @@ import { shareThought } from "@/services/auth";
 import { toast } from "sonner";
 
 export default function ThoughtPage() {
-  const [thought, setThought] = useState("");
+  const [content, setContent] = useState("");
   const [sharing, setSharing] = useState(false);
 
   const changeHandler = (value : string) => {
-    setThought(value);
+    setContent(value);
   }
 
   const shareHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!thought.trim()) {
+    if (!content.trim()) {
       toast.error("Thought cannot be empty or contain only whitespace.");
       return;
     }
@@ -23,9 +23,9 @@ export default function ThoughtPage() {
     setSharing(true);
 
     try {
-      await shareThought(thought.trim());
+      await shareThought(content.trim());
       toast.success("Your thought has been shared. Thank you for sharing.");
-      setThought("");
+      setContent("");
     } catch(err: any) {
       toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
@@ -63,7 +63,7 @@ export default function ThoughtPage() {
         <section className="space-y-4">
             <textarea
               name="thought"
-              value={thought}
+              value={content}
               onChange={(e) => changeHandler(e.target.value)}
               placeholder="Write what you want to leave behind…"
               rows={7}
@@ -94,7 +94,7 @@ export default function ThoughtPage() {
             </span>
 
             <button type="submit"
-              disabled={sharing || !thought.trim()}
+              disabled={sharing || !content.trim()}
               className="
                 rounded-full
                 px-7

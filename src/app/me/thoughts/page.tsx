@@ -1,48 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/Layout/Loading";
 import { toast } from "sonner";
-import { shareThought } from "@/services/auth";
+import { getThoughts, shareThought, deleteThought } from "@/services/auth";
 
-const thoughts = [
-  {
-    id: "1",
-    content:
-      "Some days I feel fine, and some days I don’t know why I’m tired.",
-    visibility: "Public",
-    createdAt: "2 days ago",
-    reactions: { heart: 3, hug: 1, seed: 2 },
-    comments: [
-      {
-        id: "c1",
-        text: "This feels very familiar. You’re not alone.",
-        time: "1 day ago",
-      },
-    ],
-  },
-  {
-    id: "2",
-    content:
-      "I wish it was easier to talk about things without explaining myself.",
-    visibility: "Private",
-    createdAt: "5 days ago",
-    reactions: { heart: 0, hug: 0, seed: 1 },
-    comments: [],
-  },
-];
+type TThought = {
+  _id: string;
+  content: string;
+  createdAt: string;
+  isVisible: string;
+};
 
 export default function ThoughtsPage() {
+  //Thoughts -> used to fetch user thoughts
+  const [thoughts, setThoughts] = useState<TThought[] | null>(null);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [openComments, setOpenComments] = useState<string | null>(null);
-
+  //Thought -> Used to save new thought
   const [thought, setThought] = useState("");
+  const [sharing, setSharing] = useState(false);
+  const [reaction, setReaction] = useState(false);
+
+  const fetchThoughts = async() => {
+    try {
+      const res = await getThoughts();
+      console.log("Fetched thoughts: ", res.data);
+      setThoughts(res.data);
+    } catch(err: any) {
+      console.log("Error while fetching thoughts: ", err);
+      setThoughts(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchThoughts();
+  }, [])
+
+  const router = useRouter();
+  useEffect(() => {
+    if(!loading && !thoughts) {
+      router.push("/accounts/signin");
+    }
+  }, [loading, thoughts, router])
+
+  if(loading) return <Loading/>
+  if(!thoughts) return null;
+
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setThought(e.target.value);
   }
-
-  const [sharing, setSharing] = useState(false);
-
 
   const shareHandler = async () => {
     if(!thought.trim()) {
@@ -55,6 +66,7 @@ export default function ThoughtsPage() {
       await shareThought(thought);
       toast.success("Your thought has been shared.");
       setThought("");
+      fetchThoughts();
       setOpen(false);
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Failed to share thought");
@@ -62,6 +74,30 @@ export default function ThoughtsPage() {
       setSharing(false);
     }
   };
+
+const handleDelete = async (id: string) => {
+  await deleteThought(id);
+
+  setThoughts(prev => prev?.filter(t => t._id !== id) || null);
+};
+
+function timeAgo(dateString: string) {
+  const past = new Date(dateString).getTime();
+  const now = Date.now();
+
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(diffMs / (1000 * 60));
+  const hours   = Math.floor(diffMs / (1000 * 60 * 60));
+  const days    = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (seconds < 60) return "just now";
+  if (minutes < 60) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  if (hours < 24)   return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  return `${days} day${days > 1 ? "s" : ""} ago`;
+}
+
 
   return (
     <main className="min-h-screen bg-black text-white px-6 py-20 sm:py-14">
@@ -106,135 +142,69 @@ export default function ThoughtsPage() {
           </section>
         </header>
 
-        {/* Share your thought */}
-        {/* <section
-          className="
-            rounded-2xl
-            bg-white/5
-            backdrop-blur-md
-            px-6 py-5
-            space-y-4
-          "
-        >
-          <p className="text-sm text-white/60">
-            Share your thought
-          </p>
-
-          <textarea
-            value={thought}
-            onChange={changeHandler}
-            placeholder="Write something you want to put down…"
-            rows={3}
-            className="
-              w-full rounded-xl bg-white/5 px-4 py-3 text-sm
-              text-white/80 placeholder:text-white/30
-              outline-none focus:bg-white/8 transition resize-none
-            "
-          />
-
-          <div className="flex justify-end">
-            <button
-              onClick={shareHandler}
-              disabled={sharing || !thought.trim()}
-              className="
-                text-xs px-4 py-2 rounded-lg
-                bg-orange-500/20 text-orange-300
-                hover:bg-orange-500/30
-                disabled:opacity-40 disabled:cursor-not-allowed
-                transition
-              "
-            >
-              {sharing ? "Sharing…" : "Share quietly"}
-            </button>
-          </div>
-        </section> */}
-
+        
         <section className="rounded-2xl bg-white/5 backdrop-blur-md px-6 py-5 space-y-4">
 
-  <button
-    onClick={() => setOpen((p) => !p)}
-    className="text-sm text-white/60 flex items-start w-full"
-  >
-    Share your thought
-  </button>
-
-  {open && (
-    <>
-      <textarea
-        value={thought}
-        onChange={changeHandler}
-        onFocus={() => setOpen(true)}
-        placeholder="Write something you want to put down…"
-        rows={4}
-        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm
-                   text-white/80 placeholder:text-white/30
-                   outline-none focus:bg-white/8 transition resize-none"
-      />
-
-      <div className="flex justify-end">
         <button
-          onClick={shareHandler}
-          disabled={sharing || !thought.trim()}
-          className="text-xs px-4 py-2 rounded-lg
-                     bg-orange-500/20 text-orange-300
-                     hover:bg-orange-500/30
-                     disabled:opacity-40 disabled:cursor-not-allowed
-                     transition"
-        >
-          {sharing ? "Sharing…" : "Share quietly"}
+          onClick={() => setOpen((p) => !p)}
+          className="text-sm text-white/60 flex items-start w-full">
+          Share your thought
         </button>
-      </div>
-    </>
-  )}
-</section>
 
+        {/* Thoughts sharing input */}
 
-        {/* Thoughts list */}
-        <div className="space-y-6">
-          {thoughts.map((t) => (
-            <article
-              key={t.id}
-              className="rounded-2xl bg-white/5 backdrop-blur-md px-6 py-5 space-y-4"
-            >
-              {/* Content */}
-              <p className="text-white/80 leading-relaxed">
-                {t.content}
-              </p>
+        {open && (<><textarea
+                value={thought}
+                onChange={changeHandler}
+                onFocus={() => setOpen(true)}
+                placeholder="Write something you want to put down…"
+                rows={4}
+                className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white/80 placeholder:text-white/30 outline-none focus:bg-white/8 transition resize-none"/>
 
-              {/* Meta */}
+            <div className="flex justify-end">
+              <button onClick={shareHandler}
+                      disabled={sharing || !thought.trim()}
+                      className="text-xs px-4 py-2 rounded-lg bg-orange-500/20 text-orange-300 hover:bg-orange-500/30 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                      {sharing ? "Sharing…" : "Share quietly"}
+                </button>
+              </div></>)}
+          </section>
+          <div className="space-y-6">
+            {thoughts.map((t: any) => (
+              <article
+                key={t._id}
+                className="rounded-2xl bg-white/5 backdrop-blur-md px-6 py-5 space-y-4">
+
+                <p className="text-white/80 leading-relaxed">{t.content}</p>
+
               <div className="flex items-center justify-between text-xs text-white/40">
-                <span>
-                  {t.visibility} · {t.createdAt}
-                </span>
+                <span>{timeAgo(t.createdAt)} {t.createdAt &&  <span className="text-white/70">🧡</span>}</span>
 
                 <div className="flex gap-4">
-                  <button className="hover:text-white/70 transition hover:cursor-pointer">
-                    Edit
-                  </button>
-                  <button className="hover:text-white/70 transition hover:cursor-pointer">
-                    {t.visibility === "Public" ? "Hide" : "Make public"}
-                  </button>
-                  <button className="hover:text-red-400 transition hover:cursor-pointer">
+                  {/* <button className="hover:text-white/70 transition hover:cursor-pointer">
+                    {t.isVisible === "public" ? "Hide" : "Make public"}
+                  </button> */}
+                  <button onDoubleClick={() => handleDelete(t._id)} className="hover:text-red-400 transition hover:cursor-pointer">
                     Delete
                   </button>
                 </div>
               </div>
 
               {/* Reactions */}
-              <div className="flex items-center gap-4 pt-2 text-sm text-white/50">
-                <button className="hover:text-white transition hover:cursor-pointer">
-                  🧡 {t.reactions.heart || ""}
-                </button>
-                <button className="hover:text-white transition hover:cursor-pointer">
-                  🫂 {t.reactions.hug || ""}
-                </button>
-                <button className="hover:text-white transition hover:cursor-pointer">
-                  🌱 {t.reactions.seed || ""}
-                </button>
-              </div>
+              {/* <div className="flex items-center gap-4 pt-2 text-sm text-white/50">
+                <button onClick={() => setReaction(!reaction)} className="hover:text-white transition hover:cursor-pointer"> */} 
+                  {/* {t.reactions.heart || ""} */}
+                {/* </button>
+                <button className="hover:text-white transition hover:cursor-pointer"> 🫂  */}
+                  {/* {t.reactions.hug || ""} */}
+                {/* </button>
+                <button className="hover:text-white transition hover:cursor-pointer">🌱  */}
+                  {/* {t.reactions.seed || ""} */}
+                {/* </button>
+              </div> */}
 
               {/* Actions */}
-              <div className="flex items-center gap-6 text-xs text-white/40">
+              {/* <div className="flex items-center gap-6 text-xs text-white/40">
                 <button
                   onClick={() =>
                     setOpenComments(openComments === t.id ? null : t.id)
@@ -256,11 +226,10 @@ export default function ThoughtsPage() {
                 >
                   Share quietly
                 </button>
-              </div>
+              </div> */}
 
               {/* Comments */}
-              {openComments === t.id && (
-                <div className="pt-4 space-y-4 border-t border-white/10">
+              {/* {openComments === t.id && (<div className="pt-4 space-y-4 border-t border-white/10">
                   {t.comments.length > 0 ? (
                     t.comments.map((c) => (
                       <div key={c.id} className="text-sm text-white/70">
@@ -274,10 +243,10 @@ export default function ThoughtsPage() {
                     <p className="text-sm text-white/30">
                       No one has responded yet.
                     </p>
-                  )}
+                  )} */}
 
                   {/* Add comment */}
-                  <input
+                  {/* <input
                     type="text"
                     placeholder="Leave a gentle response…"
                     className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm
@@ -285,7 +254,7 @@ export default function ThoughtsPage() {
                       outline-none focus:bg-white/8 transition"
                   />
                 </div>
-              )}
+              )} */}
             </article>
           ))}
         </div>

@@ -11,28 +11,33 @@ export default function SendToUserPage() {
 
   const [sending, setSending] = useState(false);
 
-  const [message, setMessage] = useState("");
+  const [content, setContent] = useState("");
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
+    setContent(e.target.value);
   }
 
   const sendHandler = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!message.trim()) {
+    if(!content.trim()) {
       return toast.error("Please provide a message to continue");
     }
 
     const messageInfo = {
-      username, message
+      username, content
     }
 
     setSending(true);
 
     try {
-      console.log("working")
-      await sendMessage(messageInfo);
-      toast.success("Your message has been sent successfully.");
-      setMessage("");
+      const data = await sendMessage(messageInfo);
+
+      if(data.success === false) {
+        toast.info(data.message);
+        return;
+      }
+      
+      toast.success(data.message);
+      setContent("");
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
@@ -58,10 +63,10 @@ export default function SendToUserPage() {
             Write to <span className="text-orange-400 italic font-serif font-bold"><Link href={`/u/${username}`}>@{username}</Link></span>
           </h1>
 
-          <p className="text-sm text-white/50 leading-relaxed">
-            This will be sent without your name.
+          <p className="text-white/50 leading-relaxed">
+            <span className="text-xs">This will be sent without your name.</span>
             <br />
-            Say only what feels safe to release.
+            <span className="text-sm">Say only what feels safe to release.</span>
           </p>
         </header>
 
@@ -69,7 +74,7 @@ export default function SendToUserPage() {
         <form onSubmit={sendHandler}>
         <section className="space-y-3">
           <textarea
-            value={message}
+            value={content}
             onChange={changeHandler}
             placeholder="Type what you want to say…"
             rows={6}
@@ -103,7 +108,7 @@ export default function SendToUserPage() {
 
           <button
             type="submit"
-            disabled={sending || !message.trim()}
+            disabled={sending || !content.trim()}
             className="
               rounded-full
               px-6

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "The Return - Quietism",
+    title: "The Return - Brevis",
     description: "A place to return, so you have somewhere to return to.",
 };
 

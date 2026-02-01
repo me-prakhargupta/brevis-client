@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "The Beginning - Quietism",
+  title: "The Beginning - Brevis",
   description: "A place to begin, so you have somewhere to return to.",
 };
 

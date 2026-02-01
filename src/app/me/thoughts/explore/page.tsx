@@ -1,58 +1,72 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { getPublicThoughts } from "@/services/auth";
+import Loading from "@/components/Layout/Loading";
 
-const publicThoughts = [
-  {
-    id: "p1",
-    content:
-      "Some days I feel fine, and some days I don’t know why I’m tired.",
-    createdAt: "2 days ago",
-    reactions: {
-      felt: 12,
-      holding: 4,
-      letting: 3,
-    },
-    comments: [
-      {
-        id: "c1",
-        text: "This made me pause. Thank you for sharing it.",
-        time: "1 day ago",
-      },
-    ],
-  },
-  {
-    id: "p2",
-    content:
-      "I wish rest didn’t feel like something I have to earn.",
-    createdAt: "4 days ago",
-    reactions: {
-      felt: 9,
-      holding: 2,
-      letting: 1,
-    },
-    comments: [],
-  },
-];
+type Thought = {
+  _id: string;
+  content: string;
+  createdAt: string;
+}
 
 export default function PublicThoughtsPage() {
+  const router = useRouter();
   const [openComments, setOpenComments] = useState<string | null>(null);
+  const [thoughts, setThoughts] = useState<Thought[] | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchThoughts = async () => {
+    try {
+      const res = await getPublicThoughts();
+      console.log(res.data);
+      setThoughts(res.data);
+    } catch(err: any) {
+      console.log("Error while fetching thoughts: ", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchThoughts();
+  }, []);
+
+  useEffect(() => {
+    if(!loading && !thoughts) {
+      return router.push("/accounts/signin");
+    }
+  }, [loading, thoughts, router]);
+
+  if(loading) return <Loading/>
+  if(!thoughts) return null;
+
+  function timeAgo(dateString: string) {
+    const past = new Date(dateString).getTime();
+    const now = Date.now();
+
+    const diffMs = now - past;
+
+    const seconds = Math.floor(diffMs / 1000);
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    const hours   = Math.floor(diffMs / (1000 * 60 * 60));
+    const days    = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (seconds < 60) return "just now";
+    if (minutes < 60) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    if (hours < 24)   return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
 
   return (
     <main className="min-h-screen bg-black text-white px-6 py-14">
       <section className="max-w-3xl mx-auto space-y-14">
         {/* Header */}
         <header className="space-y-3">
-          {/* <Link
-            href="/me"
-            className="text-xs text-white/40 hover:text-white/60 transition"
-          >
-            ← Back to your space
-          </Link> */}
 
-          <h1 className="text-2xl font-medium">
-            Explore thoughts
+          <h1 className="text-xl sm:text-3xl font-medium">
+            Explore <span className="text-orange-400 font-serif italic font-bold">thoughts</span>
           </h1>
           <p className="text-sm text-white/40 max-w-md leading-relaxed">
             Things people chose to leave in the open.  
@@ -62,9 +76,9 @@ export default function PublicThoughtsPage() {
 
         {/* Feed */}
         <div className="space-y-12">
-          {publicThoughts.map((t) => (
+          {thoughts.map((t) => (
             <article
-              key={t.id}
+              key={t._id}
               className="
                 rounded-xl
                 bg-white/3
@@ -80,7 +94,7 @@ export default function PublicThoughtsPage() {
 
               {/* Meta */}
               <p className="text-xs text-white/35">
-                Left here · {t.createdAt}
+                Left here · {timeAgo(t.createdAt)}
               </p>
 
               {/* Reactions (Explore-specific) */}
@@ -100,63 +114,63 @@ export default function PublicThoughtsPage() {
 
 <div className="flex flex-wrap items-center gap-2 text-xs text-white/70">
   {/* Felt */}
-  <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
+  {/* <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
     <span>🧡</span>
     <span className="hidden sm:inline">I felt this</span>
     {t.reactions.felt > 0 && (
       <span className="text-white/40">· {t.reactions.felt}</span>
     )}
-  </button>
+  </button> */}
 
   {/* Holding */}
-  <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
+  {/* <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
     <span>🫂</span>
     <span className="hidden sm:inline">Holding this</span>
     {t.reactions.holding > 0 && (
       <span className="text-white/40">· {t.reactions.holding}</span>
     )}
-  </button>
+  </button> */}
 
   {/* Let it be */}
-  <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
+  {/* <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition">
     <span>🌿</span>
     <span className="hidden sm:inline">Let it be</span>
     {t.reactions.letting > 0 && (
       <span className="text-white/40">· {t.reactions.letting}</span>
     )}
-  </button>
+  </button> */}
 </div>
 
 
               {/* Actions */}
               <div className="flex items-center gap-6 text-xs text-white/40">
-                <button
+                {/* <button
                   onClick={() =>
                     setOpenComments(
-                      openComments === t.id ? null : t.id
+                      openComments === t._id ? null : t._id
                     )
                   }
                   className="hover:text-white/70 transition hover:cursor-pointer"
                 >
-                  {openComments === t.id
+                  {openComments === t._id
                     ? "Hide responses"
                     : "Read how this landed"}
-                </button>
+                </button> */}
 
-                <button
+                {/* <button
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${window.location.origin}/thought/${t.id}`
+                      `${window.location.origin}/thought/${t._id}`
                     )
                   }
                   className="hover:text-white/70 transition hover:cursor-pointer"
                 >
                   Share quietly
-                </button>
+                </button> */}
               </div>
 
               {/* Comments */}
-              {openComments === t.id && (
+              {/* {openComments === t.id && (
                 <div className="pt-4 space-y-4 border-t border-white/10">
                   {t.comments.length > 0 ? (
                     t.comments.map((c) => (
@@ -184,7 +198,7 @@ export default function PublicThoughtsPage() {
                       outline-none focus:bg-white/8 transition"
                   />
                 </div>
-              )}
+              )} */}
             </article>
           ))}
         </div>

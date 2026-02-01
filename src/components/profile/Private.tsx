@@ -30,15 +30,16 @@ export default function PrivateProfilePage({ username, src }: PrivateProfileProp
                 <div className="absolute -inset-4 border border-white/5 rounded-full animate-[pulse_8s_infinite]" />
                 <div className="absolute -inset-8 border border-white/[0.02] rounded-full animate-[pulse_12s_infinite]" />
                 
-                <div className="h-full w-full rounded-full overflow-hidden grayscale contrast-125 opacity-40 mix-blend-screen transition-opacity duration-1000 hover:opacity-60">
-                  <Image
-                    src={src}
-                    alt={username}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
+                <div className="relative h-full w-full rounded-full overflow-hidden grayscale contrast-125 opacity-40 mix-blend-screen transition-opacity duration-1000 hover:opacity-60">
+  <Image
+    src={src}
+    alt={username}
+    fill
+    className="object-cover"
+    priority
+  />
+</div>
+
               </div>
             </div>
 

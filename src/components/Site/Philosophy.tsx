@@ -19,7 +19,7 @@ export default function Philosophy() {
             </span>
           </h3>
           <p className="mt-6 text-stone-400 text-base sm:text-lg leading-relaxed">
-            Quietism isn't a social network. It's a final destination for the things you've been carrying. No profiles, no likes, no noise.
+            Brevis isn't a social network. It's a final destination for the things you've been carrying. No profiles, no likes, no noise.
           </p>
         </div>
 
