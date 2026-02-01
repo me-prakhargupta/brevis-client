@@ -28,6 +28,7 @@ export default function Signin() {
       await signinUser(form);
       toast.success("Welcome back.");
       router.replace("/me");
+      router.refresh();
       setForm({ identifier: "", password: "" });
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Something went wrong")
