@@ -4,7 +4,7 @@ import { signinUser } from "@/services/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import AuthInput from "@/components/Input/AuthInput";
+import AuthInput from "@/components/input/AuthInput";
 import { toast } from "sonner";
 
 export default function Signin() {

@@ -3,7 +3,7 @@
 import { signupUser } from "@/services/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthInput from "@/components/Input/AuthInput";
+import AuthInput from "@/components/input/AuthInput";
 import Link from "next/link";
 import { toast } from "sonner";
 

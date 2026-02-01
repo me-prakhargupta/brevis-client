@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/Layout/Loading";
+import Loading from "@/components/layout/Loading";
 import { toast } from "sonner";
 import { getThoughts, shareThought, deleteThought } from "@/services/auth";
 

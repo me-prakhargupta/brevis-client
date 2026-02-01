@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getUser, toggleVisibility } from "@/services/auth";
-import Loading from "@/components/Layout/Loading";
+import Loading from "@/components/layout/Loading";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";

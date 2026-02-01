@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getMessages, messageStatus, deleteMessage, getUserProfile } from "@/services/auth";
-import Loading from "@/components/Layout/Loading";
+import Loading from "@/components/layout/Loading";
 import { toast } from "sonner";
 
 type TMessage = {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { sendMessage } from "@/services/auth";
-import AuthInput from "@/components/Input/AuthInput";
+import AuthInput from "@/components/input/AuthInput";
 import { toast } from "sonner";
 
 export default function SendMessage() {

@@ -1,4 +1,4 @@
-import Navbar from "@/components/Layout/Navbar";
+import Navbar from "@/components/layout/Navbar";
 import Entry from "@/components/Site/Entry";
 import Philosophy from "@/components/Site/Philosophy";
 import Choices from "@/components/Site/Choices";

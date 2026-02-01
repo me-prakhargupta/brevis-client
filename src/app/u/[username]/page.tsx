@@ -3,10 +3,10 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getUserProfile } from "@/services/auth";
-import Loading from "@/components/Layout/Loading";
-import UserNotFound from "@/components/Layout/UserNotFound";
-import PrivateProfilePage from "@/components/Profile/Private";
-import PublicProfilePage from "@/components/Profile/Public";
+import Loading from "@/components/layout/Loading";
+import UserNotFound from "@/components/layout/UserNotFound";
+import PrivateProfilePage from "@/components/profile/Private";
+import PublicProfilePage from "@/components/profile/Public";
 
 export default function UserPage() {
     const { username } = useParams<{username: string}>();

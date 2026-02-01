@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getPublicThoughts } from "@/services/auth";
-import Loading from "@/components/Layout/Loading";
+import Loading from "@/components/layout/Loading";
 
 type Thought = {
   _id: string;
