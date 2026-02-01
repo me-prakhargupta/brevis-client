@@ -35,9 +35,9 @@ export default function MePage() {
     fetchUser();
   }, []);
 
-  if (!user) {
-  return null;
-}
+//   if (!user) {
+//   return null;
+// }
   // useEffect(() => {
   //   if (!loading && !user) {
   //     router.push("/accounts/signin");

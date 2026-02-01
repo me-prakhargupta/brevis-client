@@ -27,7 +27,7 @@ export default function Signin() {
     try {
       await signinUser(form);
       toast.success("Welcome back.");
-      router.replace("/me");
+      window.location.href = "/me";
       router.refresh();
       setForm({ identifier: "", password: "" });
     } catch (err: any) {

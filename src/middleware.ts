@@ -20,7 +20,9 @@ export function middleware(req: NextRequest) {
     //     return NextResponse.redirect(new URL("/me", req.url));
     // }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set('x-middleware-cache', 'no-cache');
+    return response;
 };
 
 export const config = {
