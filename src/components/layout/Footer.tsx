@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black pt-20 pb-10 overflow-hidden">
+    <footer className="relative bg-black pt-5 pb-10 overflow-hidden">
       
       {/* Soft, low-intensity glow at the bottom center */}
       <div
@@ -20,7 +20,7 @@ export default function Footer() {
           
           {/* 1. Main Navigation */}
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-4 mb-10">
-            {[
+            {/* {[
               "About",
               "Contact",
               "Privacy",
@@ -35,7 +35,7 @@ export default function Footer() {
               >
                 {item}
               </Link>
-            ))}
+            ))} */}
           </nav>
 
           {/* 2. Brand Identity */}
@@ -57,16 +57,14 @@ export default function Footer() {
 
             <div className="order-1 md:order-2 flex items-center gap-2">
               <span className="opacity-50">Presence</span>
-              <Link
-                href="https://instagram.com/emptied.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-stone-500 hover:text-orange-400/70 transition-colors"
-              >
-                @quietism.in
-              </Link>
-            </div>
+              </div>
           </div> */}
+              <Link
+                href="/contact"
+                className="text-stone-500/70 text-xs hover:text-orange-400/70 transition-colors"
+              >
+                Contact
+              </Link>
         </div>
       </div>
     </footer>

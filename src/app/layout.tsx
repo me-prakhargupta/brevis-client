@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Brevis - A place to let it out.",
   description:
     "Brevis is a minimal space to share thoughts and messages without replies, noise, or expectation.",
+  // icons: {
+  //   icon: "/favicon.jpg",
+  // },
 };
 
 
