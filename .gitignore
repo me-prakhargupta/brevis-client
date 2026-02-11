@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# manifesto
+src/app/manifesto/
+
 # next.js
 /.next/
 /out/
