@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brevis Client
+
+> Frontend application for Brevis — a minimalist, privacy-first platform for emotional expression and quiet release.
+
+**Live Demo:** https://brevis-five.vercel.app/  
+**Main Project:** https://github.com/me-prakhargupta/brevis  
+**Backend Repo:** https://github.com/me-prakhargupta/brevis-server
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Frontend Principles](#frontend-principles)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+  - [Clone the repo](#1-clone-the-repo)
+  - [Install dependencies](#2-install-dependencies)
+  - [Run development server](#3-run-development-server)
+- [Environment Variables](#environment-variables)
+- [Future Improvements](#future-improvements)
+- [Key Takeaway](#key-takeaway)
+- [Author](#author)
+- [Note](#note)
+
+---
+
+## Overview
+
+This is the **client-side application** of Brevis, built to deliver a calm, distraction-free interface for expressing thoughts without pressure or noise.
+
+The focus of this frontend is not feature complexity, but **intentional simplicity and emotional UX**.
+
+---
+
+## Tech Stack
+
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS**
+
+---
+
+## Frontend Principles
+
+- **Minimal UI**  
+  Every element serves a purpose. No visual noise.
+
+- **Low-friction interaction**  
+  Users can start expressing instantly.
+
+- **Non-performative design**  
+  No metrics, no feedback loops, no engagement triggers.
+
+- **Fast and responsive**  
+  Optimized using Next.js rendering capabilities.
+
+---
+
+## Architecture
+
+```
+UI Components → Pages (App Router) → API Calls → Backend (Node.js)
+```
+
+- Component-driven structure for scalability
+- Separation of UI, logic, and utilities
+- Clean and maintainable folder organization
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/me-prakhargupta/brevis-client.git
+cd brevis-client
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs on:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the root directory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_API_URL=your_backend_url
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Replace `your_backend_url` with the URL of your running Brevis backend server.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Future Improvements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Enhanced UI polish and micro-interactions
+- Better state handling (if scaling increases)
+- Improved accessibility and responsiveness
+- Deeper integration with backend features
+
+---
+
+## Key Takeaway
+
+This frontend is intentionally simple — but that simplicity is designed, not accidental.
+
+It prioritizes:
+
+- **Clarity** over features
+- **Experience** over engagement
+- **Expression** over interaction
+
+---
+
+## Author
+
+**Prakhar Gupta**  
+Full-Stack Developer (Next.js, Node.js, TypeScript)  
+Focused on building backend-driven, production-grade web applications.
+
+---
+
+## Note
+
+This repository contains only the client-side implementation of Brevis. For the complete system architecture, see the [main Brevis project](https://github.com/me-prakhargupta/brevis).
