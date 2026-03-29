@@ -8,29 +8,26 @@ export default function PortfolioPage() {
 
     const projects = [
         {
+            name: "Carvio",
+            desc: "Job hunting is dominated by filtering noise, not applying. Carvio automates this by aggregating listings from multiple sources, normalizing inconsistent data, and filtering roles based on relevance. Built with a modular ingestion pipeline, cron-based schedulers, and MongoDB TTL cleanup to ensure fresh, high-signal opportunities.",
+            stack: ["Node.js", "Express", "TypeScript", "MongoDB", "node-cron", "Resend"],
+            github: "https://github.com/me-prakhargupta/carvio",
+            live: "https://trycarvio.vercel.app/"
+        }, {
             name: "Brevis",
-            desc: "A minimalist platform for anonymous emotional expression designed around privacy-first architecture. Implements JWT authentication, rate limiting, and structured backend services to support secure and low-friction interaction.",
+            desc: "A privacy-first platform for anonymous emotional expression. Designed with JWT-based authentication, rate limiting, and secure backend architecture to support low-friction, non-performative interaction at scale.",
             stack: ["Node.js", "Express", "MongoDB", "JWT Auth", "Rate Limiting", "Next.js"],
             github: "https://github.com/me-prakhargupta/brevis/",
             live: "https://brevis-five.vercel.app/"
-        }, 
-        {
-            name: "Calvio",
-            desc: "A hyperlocal service discovery platform built using a modular monolith backend architecture. Implements provider onboarding, authentication, and scalable API design for marketplace-style interactions.",
-            stack: ["Node.js", "Express", "TypeScript", "MongoDB", "Modular Monolith"],
-            github: "https://github.com/me-prakhargupta/calvio-server",
-            live: "#"
-        },
-        {
+        }, {
             name: "AI Assisted Journal",
-            desc: "An AI-powered journaling system that analyzes emotional tone using LLM-based sentiment analysis. Built with structured APIs, rate limiting, and on-demand emotion analysis pipelines.",
+            desc: "An AI-assisted journaling system that analyzes emotional tone using LLM APIs. Designed with on-demand analysis architecture, structured APIs, and rate limiting to balance cost, performance, and user experience.",
             stack: ["Next.js", "TypeScript", "Google GenAI", "Tailwind"],
             github: "https://github.com/me-prakhargupta/ai-assisted-journal-system",
             live: "https://ai-assisted-journal-system-theta.vercel.app/"
-        },
-        {
+        }, {
             name: "Pramaan",
-            desc: "A task management platform designed for accessibility and simplicity. Focuses on clean UI architecture and frictionless task workflows for senior citizens and busy professionals.",
+            desc: "A hyper-simple task management platform focused on accessibility for senior citizens. Emphasizes intuitive UI, minimal cognitive load, and frictionless workflows using a clean Next.js architecture.",
             stack: ["Next.js", "Tailwind CSS", "Vercel"],
             github: "https://github.com/me-prakhargupta/pramaan-client",
             live: "https://pramaan-peach.vercel.app/"
