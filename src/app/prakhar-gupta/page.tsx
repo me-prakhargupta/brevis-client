@@ -1,11 +1,7 @@
 import Link from "next/link";
-import { createLucideIcon, Github, Linkedin, Mail, Download, ArrowUpRight, Globe } from "lucide-react";
+import { createLucideIcon, Github, Linkedin, Mail, Download, ArrowUpRight, Globe, ShieldAlert } from "lucide-react";
 
 export default function PortfolioPage() {
-    const XIcon = createLucideIcon('XIcon', [
-        ['path', { d: 'M18.9 1.1h3.7l-8.1 9.3 9.5 12.8h-7.4l-5.8-7.6-6.6 7.6h-3.7l8.6-9.8-9.2-12.3h7.6l5.3 7 5.2-7zm-1.3 19.9h2.1l-11-14.7h-2.2l11.1 14.7z', key: 'x' }]
-    ]);
-
     const projects = [
         {
             name: "Carvio",
@@ -44,14 +40,17 @@ export default function PortfolioPage() {
 
                 <h1 className="text-white font-extrabold tracking-tight text-5xl sm:text-7xl leading-[1.1] mb-8">Prakhar Gupta.<br /><span className="text-orange-400/80 italic font-serif">Designing systems quietly.</span></h1>
 
-                <p className="text-stone-400 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl">Building systems quietly behind the interface. I focus on creating scalable, production-ready systems and clean, reflective digital experiences.</p>
+                <p className="text-stone-400 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl">Full stack developer focused on backend engineering — building scalable APIs, secure authentication systems, and production-ready web applications.</p>
 
                 <div className="flex flex-wrap gap-6">
+                    <Link href="/prakhar-gupta/disclosures" className="flex items-center gap-2 text-white text-xs uppercase tracking-widest font-bold hover:text-orange-400 transition-colors group">
+                        <ShieldAlert size={16} className="text-orange-500/60" /> Disclosures
+                    </Link>
                     <Link href="https://github.com/me-prakhargupta/" target="_blank" className="flex items-center gap-2 text-white text-xs uppercase tracking-widest font-bold hover:text-orange-400 transition-colors group">
                         <Github size={16} className="text-orange-500/60" /> GitHub 
                         <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-all -translate-y-1" />
                     </Link>
-                    <Link href="/Prakhar_Gupta_Resume.pdf" download className="flex items-center gap-2 text-white text-xs uppercase tracking-widest font-bold hover:text-orange-400 transition-colors group">
+                    <Link href="/Prakhar_Gupta_Full_Stack_Developer_Resume.pdf" download className="flex items-center gap-2 text-white text-xs uppercase tracking-widest font-bold hover:text-orange-400 transition-colors group">
                         <Download size={16} className="text-orange-500/60" /> Resume
                     </Link>
                 </div>
@@ -61,26 +60,30 @@ export default function PortfolioPage() {
                 <div className="space-y-6">
                     <h2 className="text-stone-500 text-[10px] uppercase tracking-[0.5em] font-bold mb-8">The Approach</h2>
 
-                    <h3 className="text-white font-bold text-2xl tracking-tight">Engineering Philosophy</h3>
+                    <h3 className="text-white font-bold text-2xl tracking-tight">How I Build Systems</h3>
 
-                    <p className="text-stone-500 text-sm leading-relaxed">I focus on building backend systems that are simple, reliable, and built to scale.</p>
+                    <p className="text-stone-500 text-sm leading-relaxed">I build backend systems that are simple, reliable, and designed to scale under real-world load.</p>
 
-                    <p className="text-stone-500 text-sm leading-relaxed">My work centers around designing authentication architectures, structuring clean REST APIs, and implementing infrastructure patterns like rate limiting, middleware pipelines, and modular service design.</p>
+                    <p className="text-stone-500 text-sm leading-relaxed">My work centers around designing authentication architectures, structuring clean REST APIs, and building data-driven backend systems - including scheduled job pipelines (node-cron), web scraping workflows, and LLM-powered features.</p>
 
-                    <p className="text-stone-500 text-sm leading-relaxed">I enjoy building systems that stay invisible to users - but hold the product together under the surface.</p>
+                    <p className="text-stone-500 text-sm leading-relaxed">I focus on infrastructure patterns like rate limiting, middleware pipelines, and modular service design to ensure systems remain secure, maintainable, and scalable.</p>
+                    <p className="text-stone-500 text-sm leading-relaxed">I build systems that stay invisible to users - but are critical to reliability, performance, and scale.</p>
                 </div>
           
                 <div className="grid grid-cols-2 gap-8 mt-15">
                     <div>
                         <h4 className="text-orange-500/70 text-[10px] uppercase tracking-widest font-bold mb-4">Backend</h4>
                         <ul className="text-stone-400 text-sm space-y-2 font-mono">
-                            <li>Node.js / Express</li>
+                            <li>Node.js (Express)</li>
                             <li>TypeScript</li>
                             <li>MongoDB</li>
                             <li>REST APIs</li>
-                            <li>Middleware Architecture</li>
                             <li>Authentication Systems</li>
+                            <li>Middleware Architecture</li>
                             <li>Rate Limiting</li>
+                            <li>Job Scheduling (node-cron)</li>
+                            <li>Web Scraping Pipelines</li>
+                            <li>LLM-Powered Features</li>
                         </ul>
                     </div>
                     <div>
@@ -129,9 +132,7 @@ export default function PortfolioPage() {
                         <div className="flex gap-8">
                             <Link href="https://github.com/me-prakhargupta/" target="_blank" className="text-stone-500 hover:text-white transition-colors flex items-center justify-center"><Github size={20} /></Link>
 
-                            <Link href="https://www.linkedin.com/in/meprakhargupta/" target="_blank" className="text-stone-500 hover:text-white transition-colors flex items-center justify-center"><Linkedin size={20} /></Link>
-
-                            <Link href="https://x.com/meprakhargupta" target="_blank" className="text-stone-500 hover:text-white transition-colors flex items-center justify-center"><XIcon size={18} /></Link>              
+                            <Link href="https://www.linkedin.com/in/meprakhargupta/" target="_blank" className="text-stone-500 hover:text-white transition-colors flex items-center justify-center"><Linkedin size={20} /></Link>           
                         </div>
                     </div>
           
